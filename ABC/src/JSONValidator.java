@@ -37,13 +37,12 @@ public class JSONValidator {
 		Properties prop = new Properties();
 		InputStream input = null;
 		try {
-			input = new FileInputStream(System.getProperty("user.dir") + "/src/environments.properties");
-			
-			//load a properties file
-			prop.load(input);
-			
+			input = new FileInputStream(System.getProperty("user.dir") + "/src/environments.properties");			
+			//load a Environment properties file
+			prop.load(input);			
 			//Get Execution environment
 			environment = prop.getProperty("ExecutionEnvironment");			
+			//Get data from each API calls for respective Environment
 			XSSFSheet mySheet = null;		
 			File myFile = new File(System.getProperty("user.dir") + "/src/EnvironmentsData.xlsx");
 	        FileInputStream fis = new FileInputStream(myFile);
@@ -56,7 +55,7 @@ public class JSONValidator {
 		    else{
 		        mySheet = myWorkBook.getSheetAt(1);
 	        }
-	        // Get iterator to all the rows in current sheet
+	     // Every Set of Data has separate Iterator. So if we have 2 sections say(Morning Data & Evening Data, then the iteration in Framework will be 2 and so on.....
 	        Iterator<Row> rowIterator = mySheet.iterator();
 	        String dataMapping = null;
 	        // Traversing over each row of XLSX file
@@ -79,10 +78,12 @@ public class JSONValidator {
 	            url = cell.getStringCellValue();           	    		
 	    		readJSON();
 	    		System.out.println(json);
+	    		// Parsing the JSON
 	    		parseJSON(dataMapping);
+	    		// Initializing to null again so that next set of data have clean data 
 	    		json = "";
 	        }
-	        // Get iterator to all the rows in current sheet
+	        // Every Set of Data has separate Iterator. So if we have 2 sections say(Morning Data & Evening Data, then the iteration in Framework will be 2 and so on..... 
 	        rowIterator = mySheet.iterator();
 	        // Traversing over each row of XLSX file
 	        while (rowIterator.hasNext()) {
@@ -101,17 +102,18 @@ public class JSONValidator {
 	            }
 	            System.out.print(dataMapping +" " + cell.getStringCellValue());
 	            //Get URL
-	            url = cell.getStringCellValue();     
-	            // TODO Auto-generated method stub	    		
+	            url = cell.getStringCellValue();	            	    		
 	    		readJSON();
 	    		System.out.println(json);
+	    		// Parsing the JSON
 	    		parseJSON(dataMapping);
+	    		// Initializing to null again so that next set of data have clean data 
 	    		json = "";
 	        }
 			
 		}catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
+		} finally { // Exception handling
 			if (input != null) {
 				try {
 					input.close();
