@@ -37,14 +37,14 @@ public class JSONValidator {
 		Properties prop = new Properties();
 		InputStream input = null;
 		try {
-			input = new FileInputStream(System.getProperty("user.dir") + "/src/environments.properties");			
+			input = new FileInputStream(System.getProperty("user.dir") + "/environments.properties");			
 			//load a Environment properties file
 			prop.load(input);			
 			//Get Execution environment
 			environment = prop.getProperty("ExecutionEnvironment");			
 			//Get data from each API calls for respective Environment
 			XSSFSheet mySheet = null;		
-			File myFile = new File(System.getProperty("user.dir") + "/src/EnvironmentsData.xlsx");
+			File myFile = new File(System.getProperty("user.dir") + "/EnvironmentsData.xlsx");
 	        FileInputStream fis = new FileInputStream(myFile);
 	        // Finds the workbook instance for XLSX file
 	        XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
@@ -130,10 +130,10 @@ public class JSONValidator {
 		InputStream input = null;
 		 try {			 	
 			 	if(dataMapping.equals("Morning Data")){
-			 		input = new FileInputStream(System.getProperty("user.dir") + "/src/mornings_program.properties");		 		
+			 		input = new FileInputStream(System.getProperty("user.dir") + "/mornings_program.properties");		 		
 			 	}
 			 	else{
-			 		input = new FileInputStream(System.getProperty("user.dir") + "/src/afternoon_program.properties");
+			 		input = new FileInputStream(System.getProperty("user.dir") + "/afternoon_program.properties");
 			 	}			 	
 	            Object obj = parser.parse(json);
 
